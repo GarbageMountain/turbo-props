@@ -178,16 +178,16 @@ export function TurboProps<T extends Theme>(
       color
         ? theme.colors[color as string]
         : theme.colors[defaults.color as string]};
-    font-size: ${({ theme, size }) =>
-      theme.sizes[
-        (size as string | undefined) ?? (defaults.sizes.font as string)
-      ]}px;
+    font: ${({ theme, size }) =>
+        theme.sizes[
+          (size as string | undefined) ?? (defaults.sizes.font as string)
+        ]}px
+      ${({ theme, weight, family }) =>
+        theme.fonts[(family as string) ?? (defaults.font as string)][
+          ((weight as unknown) as string) ??
+            ((defaults.weight as unknown) as string)
+        ]};
     ${({ center }) => (center ? `text-align: center;` : ``)}
-    font-family: ${({ theme, weight, family }) =>
-      theme.fonts[(family as string) ?? (defaults.font as string)][
-        ((weight as unknown) as string) ??
-          ((defaults.weight as unknown) as string)
-      ]};
   `;
 
   const spacer = {
