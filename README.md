@@ -1,6 +1,8 @@
-# ─=≡Σ༼ つ ▀ \_▀ ༽つ `turbo-props`
+# ─=≡Σ༼ つ ▀ \_▀ ༽つ
 
-### Some nice Styled Components props for making snazzy type-safe, themed building blocks using Typescript
+# `turbo-props`
+
+### Styled Components props for making snazzy building blocks using Typescript.
 
 ---
 
@@ -8,6 +10,7 @@
 
 ```bash
 yarn add turbo-props styled-components # or npm install turbo-props styled-components
+
 yarn add -D @types/styled-components # or npm install --save-dev @types/styled-components
 ```
 
@@ -26,7 +29,7 @@ export const {
   css, // 👈 a css function with your theme baked in
   styled, // 👈 a styled function with your theme baked in
   useTheme, // 👈 a useTheme hook with your theme baked in
-  // 👇 these are the basic building blocks
+  // 👇 `turbo-props` basic building blocks
   baseLayout,
   baseRowLayout,
   baseColumnLayout,
@@ -40,7 +43,7 @@ export const {
     colors: { brand: 'red' },
     /*
      * sizes can be described in any way, we've found it useful to use
-     * a hybrid of t-shirt sizing / numeric value to provid both context
+     * a hybrid of t-shirt sizing / numeric value to provide both context
      * and detail
      */
     sizes: {
