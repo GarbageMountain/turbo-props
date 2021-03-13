@@ -44,6 +44,20 @@ export type DebugProps = {
   debug?: boolean;
 };
 
+type FlexJustifyType =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly';
+type FlexAlignType =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'stretch'
+  | 'baseline';
+
 /**
  * Is either present as boolean meaning default value,
  * an explicit FontSize which comes from the theme,
@@ -53,11 +67,8 @@ type SizeProp<FontSize> = boolean | FontSize | number;
 
 type BorderType<Color> = [number, 'solid' | 'dotted' | 'dashed', Color];
 
-export type LayoutProps<T extends Theme> = {
+type CommonProps<T extends Theme> = {
   grow?: boolean;
-  size?: number;
-  align?: boolean;
-  justify?: boolean;
   center?: boolean;
   px?: SizeProp<Sizes<T>>;
   py?: SizeProp<Sizes<T>>;
@@ -65,18 +76,23 @@ export type LayoutProps<T extends Theme> = {
   absolute?:
     | boolean
     | { top?: number; right?: number; bottom?: number; left?: number };
-  reverse?: boolean;
   radius?: SizeProp<Sizes<T>>;
   border?: BorderType<Colors<T>>;
 } & DebugProps;
+
+export type LayoutProps<T extends Theme> = {
+  size?: number;
+  justify?: boolean | FlexJustifyType;
+  align?: boolean | FlexAlignType;
+  reverse?: boolean;
+} & CommonProps<T>;
 
 export type TypographyProps<T extends Theme> = {
   size?: Sizes<T>;
   family?: Fonts<T>;
   weight?: Weights<T>;
-  center?: boolean;
   color?: Colors<T>;
-} & DebugProps;
+} & CommonProps<T>;
 
 export type SpacerProps<T extends Theme> = {
   /**
@@ -103,13 +119,10 @@ export function TurboProps<T extends Theme>(
   const styled = baseStyled as ThemedStyledInterface<T>;
   const useTheme = baseUseTheme as () => T;
 
-  const baseLayout = css<LayoutProps<T>>`
+  const base = css<CommonProps<T>>`
     ${({ bg, theme }) =>
       bg ? `background-color: ${theme.colors[bg as string]};` : ``}
     ${({ grow }) => (grow ? `flex: 1;` : ``)}
-    ${({ align, center }) => (align || center ? `align-items: center;` : ``)}
-    ${({ justify, center }) =>
-      justify || center ? `justify-content: center;` : ``}
     ${({ px, py, theme }) => {
       const paddingX =
         px === undefined
@@ -163,6 +176,22 @@ export function TurboProps<T extends Theme>(
     }}
   `;
 
+  const baseLayout = css<LayoutProps<T>>`
+    ${base}
+    ${({ align, center }) =>
+      typeof align === 'string'
+        ? `align-items: ${align};`
+        : align || center
+        ? `align-items: center;`
+        : ``}
+    ${({ justify, center }) =>
+      typeof justify === 'string'
+        ? `justify-content: ${justify};`
+        : justify || center
+        ? `justify-content: center;`
+        : ``}
+  `;
+
   const baseRowLayout = css<LayoutProps<T>>`
     flex-direction: ${({ reverse }) => (reverse ? `row-reverse` : `row`)};
     ${({ size }) => (size ? `height: ${size}px;` : ``)}
@@ -174,14 +203,17 @@ export function TurboProps<T extends Theme>(
   `;
 
   const baseTypography = css<TypographyProps<T>>`
+    ${base}
     color: ${({ theme, color }) =>
       color
         ? theme.colors[color as string]
         : theme.colors[defaults.color as string]};
     font: ${({ theme, size }) =>
-        theme.sizes[
-          (size as string | undefined) ?? (defaults.sizes.font as string)
-        ]}px
+      typeof size === 'number'
+        ? size
+        : theme.sizes[
+            (size as string | undefined) ?? (defaults.sizes.font as string)
+          ]}px
       ${({ theme, weight, family }) =>
         theme.fonts[(family as string) ?? (defaults.font as string)][
           ((weight as unknown) as string) ??

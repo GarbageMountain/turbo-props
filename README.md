@@ -1,6 +1,4 @@
-# ─=≡Σ༼ つ ▀ \_▀ ༽つ
-
-# `turbo-props`
+# ─=≡Σ༼ つ ▀ \_▀ ༽つ`turbo-props`
 
 ### Styled Components props for making snazzy building blocks using Typescript.
 
@@ -22,14 +20,14 @@ import { TurboProps, ThemedProps } from 'turbo-props';
 
 export const {
   /*
-   * 👇 your theme ie. the first argument to the TurboProps function,
+   * your theme ie. the first argument to the TurboProps function,
    * which is passed to the styled-components ThemeProvider
    */
   theme,
-  css, // 👈 a css function with your theme baked in
-  styled, // 👈 a styled function with your theme baked in
-  useTheme, // 👈 a useTheme hook with your theme baked in
-  // 👇 `turbo-props` basic building blocks
+  css, // a css function with your theme baked in
+  styled, // a styled function with your theme baked in
+  useTheme, // a useTheme hook with your theme baked in
+  // `turbo-props` basic building blocks
   baseLayout,
   baseRowLayout,
   baseColumnLayout,
@@ -37,7 +35,7 @@ export const {
   spacer,
   divider,
 } = TurboProps(
-  // 👇 this is your main app theme, it is returned from the TurboProps function (see `theme` above 👆)
+  // this is your main app theme, it is returned from the TurboProps function (see `theme` above)
   {
     // be descriptive when describing your color names
     colors: { brand: 'red' },
@@ -65,7 +63,7 @@ export const {
     },
     grid: 8,
   },
-  // 👇 these are your theme defaults, the values that are used as fallbacks if no value is entered
+  // these are your theme defaults, the values that are used as fallbacks if no value is entered
   {
     color: 'brand',
     font: 'mono',
