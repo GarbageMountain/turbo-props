@@ -5,7 +5,7 @@ import baseStyled, {
   useTheme as baseUseTheme,
 } from 'styled-components';
 
-type Theme = {
+interface Theme {
   colors: {
     [key: string]: string;
   };
@@ -18,14 +18,14 @@ type Theme = {
     };
   };
   grid: number;
-};
+}
 
 export type Colors<T extends Theme> = keyof T['colors'];
 export type Sizes<T extends Theme> = keyof T['sizes'];
 export type Fonts<T extends Theme> = keyof T['fonts'];
 export type Weights<T extends Theme> = keyof T['fonts'][keyof T['fonts']];
 
-type ThemeDefaults<T extends Theme> = {
+interface ThemeDefaults<T extends Theme> {
   color: Colors<T>;
   sizes: {
     font: Sizes<T>;
@@ -35,14 +35,14 @@ type ThemeDefaults<T extends Theme> = {
   };
   font: Fonts<T>;
   weight: Weights<T>;
-};
+}
 
-export type DebugProps = {
+export interface DebugProps {
   /**
    * show debug borders for just this component
    */
   debug?: boolean;
-};
+}
 
 type FlexJustifyType =
   | 'flex-start'
@@ -67,7 +67,7 @@ type SizeProp<FontSize> = boolean | FontSize | number;
 
 type BorderType<Color> = [number, 'solid' | 'dotted' | 'dashed', Color];
 
-type CommonProps<T extends Theme> = {
+interface CommonProps<T extends Theme> extends DebugProps {
   grow?: boolean;
   center?: boolean;
   px?: SizeProp<Sizes<T>>;
@@ -78,23 +78,23 @@ type CommonProps<T extends Theme> = {
     | { top?: number; right?: number; bottom?: number; left?: number };
   radius?: SizeProp<Sizes<T>>;
   border?: BorderType<Colors<T>>;
-} & DebugProps;
+}
 
-export type LayoutProps<T extends Theme> = {
+export interface LayoutProps<T extends Theme> extends CommonProps<T> {
   size?: number;
   justify?: boolean | FlexJustifyType;
   align?: boolean | FlexAlignType;
   reverse?: boolean;
-} & CommonProps<T>;
+}
 
-export type TypographyProps<T extends Theme> = {
+export interface TypographyProps<T extends Theme> extends CommonProps<T> {
   size?: Sizes<T>;
   family?: Fonts<T>;
   weight?: Weights<T>;
   color?: Colors<T>;
-} & CommonProps<T>;
+}
 
-export type SpacerProps<T extends Theme> = {
+export interface SpacerProps<T extends Theme> extends DebugProps {
   /**
    * Size of Spacer = units * grid (8px)
    * defaults to 1
@@ -104,12 +104,12 @@ export type SpacerProps<T extends Theme> = {
    * If `size` is provided, `units` is ignored
    */
   size?: SizeProp<Sizes<T>>;
-} & DebugProps;
+}
 
-export type DividerProps<T extends Theme> = {
+export interface DividerProps<T extends Theme> {
   color?: Colors<T>;
   lineWidth?: number;
-};
+}
 
 export function TurboProps<T extends Theme>(
   theme: T,
