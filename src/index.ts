@@ -74,7 +74,6 @@ interface ShadowType {
     width: number;
     height: number;
   };
-  shadowOpacity: number;
   shadowRadius: number;
   elevation: number;
 }
@@ -182,18 +181,12 @@ export function TurboProps<T extends Theme>(
     ${({ shadow }) =>
       typeof shadow === 'object'
         ? `
-          shadow-color: ${shadow.shadowColor};
-          shadow-offset: ${shadow.shadowOffset.height}px ${shadow.shadowOffset.width}12px;
-          shadow-opacity: ${shadow.shadowOpacity};
-          shadow-radius: ${shadow.shadowRadius}px;
+          box-shadow: ${shadow.shadowOffset.height}px ${shadow.shadowOffset.width}px ${shadow.shadowRadius}px ${shadow.shadowColor};
           elevation: ${shadow.elevation};
         `
         : typeof shadow === 'boolean'
         ? `
-          shadow-color: ${defaults.shadow.shadowColor};
-          shadow-offset: ${defaults.shadow.shadowOffset.height}px ${defaults.shadow.shadowOffset.width}12px;
-          shadow-opacity: ${defaults.shadow.shadowOpacity};
-          shadow-radius: ${defaults.shadow.shadowRadius}px;
+          box-shadow: ${defaults.shadow.shadowOffset.height}px ${defaults.shadow.shadowOffset.width}px ${defaults.shadow.shadowRadius}px ${defaults.shadow.shadowColor};
           elevation: ${defaults.shadow.elevation};
         `
         : ``}
