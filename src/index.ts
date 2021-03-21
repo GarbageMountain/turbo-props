@@ -35,6 +35,7 @@ interface ThemeDefaults<T extends Theme> {
   };
   font: Fonts<T>;
   weight: Weights<T>;
+  shadow: ShadowType;
 }
 
 export interface DebugProps {
@@ -67,6 +68,17 @@ type SizeProp<FontSize> = boolean | FontSize | number;
 
 type BorderType<Color> = [number, 'solid' | 'dotted' | 'dashed', Color];
 
+interface ShadowType {
+  shadowColor: string;
+  shadowOffset: {
+    width: number;
+    height: number;
+  };
+  shadowOpacity: number;
+  shadowRadius: number;
+  elevation: number;
+}
+
 interface CommonProps<T extends Theme> extends DebugProps {
   grow?: boolean;
   center?: boolean;
@@ -78,6 +90,7 @@ interface CommonProps<T extends Theme> extends DebugProps {
     | { top?: number; right?: number; bottom?: number; left?: number };
   radius?: SizeProp<Sizes<T>>;
   border?: BorderType<Colors<T>>;
+  shadow?: ShadowType | boolean;
 }
 
 export interface LayoutProps<T extends Theme> extends CommonProps<T> {
@@ -165,6 +178,24 @@ export function TurboProps<T extends Theme>(
                     : (defaults.sizes.radius as string)
                 ] / 2
           }px;`
+        : ``}
+    ${({ shadow }) =>
+      typeof shadow === 'object'
+        ? `
+          shadow-color: ${shadow.shadowColor};
+          shadow-offset: ${shadow.shadowOffset.height}px ${shadow.shadowOffset.width}12px;
+          shadow-opacity: ${shadow.shadowOpacity};
+          shadow-radius: ${shadow.shadowRadius}px;
+          elevation: ${shadow.elevation};
+        `
+        : typeof shadow === 'boolean'
+        ? `
+          shadow-color: ${defaults.shadow.shadowColor};
+          shadow-offset: ${defaults.shadow.shadowOffset.height}px ${defaults.shadow.shadowOffset.width}12px;
+          shadow-opacity: ${defaults.shadow.shadowOpacity};
+          shadow-radius: ${defaults.shadow.shadowRadius}px;
+          elevation: ${defaults.shadow.elevation};
+        `
         : ``}
     ${({ border, theme }) => {
       if (border) {
