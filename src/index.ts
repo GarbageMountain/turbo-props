@@ -35,7 +35,7 @@ interface ThemeDefaults<T extends Theme> {
   };
   font: Fonts<T>;
   weight: Weights<T>;
-  shadow: ShadowType;
+  shadow: ShadowType<Colors<T>>;
 }
 
 export interface DebugProps {
@@ -68,8 +68,8 @@ type SizeProp<FontSize> = boolean | FontSize | number;
 
 type BorderType<Color> = [number, 'solid' | 'dotted' | 'dashed', Color];
 
-interface ShadowType {
-  shadowColor: string;
+interface ShadowType<Color> {
+  shadowColor: Color;
   shadowOffset: {
     width: number;
     height: number;
@@ -89,7 +89,7 @@ interface CommonProps<T extends Theme> extends DebugProps {
     | { top?: number; right?: number; bottom?: number; left?: number };
   radius?: SizeProp<Sizes<T>>;
   border?: BorderType<Colors<T>>;
-  shadow?: ShadowType | boolean;
+  shadow?: ShadowType<Colors<T>> | boolean;
 }
 
 export interface LayoutProps<T extends Theme> extends CommonProps<T> {
@@ -178,15 +178,23 @@ export function TurboProps<T extends Theme>(
                 ] / 2
           }px;`
         : ``}
-    ${({ shadow }) =>
+    ${({ shadow, theme }) =>
       typeof shadow === 'object'
         ? `
-          box-shadow: ${shadow.shadowOffset.height}px ${shadow.shadowOffset.width}px ${shadow.shadowRadius}px ${shadow.shadowColor};
+          box-shadow: ${shadow.shadowOffset.height}px ${
+            shadow.shadowOffset.width
+          }px ${shadow.shadowRadius}px ${
+            theme.colors[shadow.shadowColor as string]
+          };
           elevation: ${shadow.elevation};
         `
         : typeof shadow === 'boolean'
         ? `
-          box-shadow: ${defaults.shadow.shadowOffset.height}px ${defaults.shadow.shadowOffset.width}px ${defaults.shadow.shadowRadius}px ${defaults.shadow.shadowColor};
+          box-shadow: ${defaults.shadow.shadowOffset.height}px ${
+            defaults.shadow.shadowOffset.width
+          }px ${defaults.shadow.shadowRadius}px ${
+            theme.colors[defaults.shadow.shadowColor as string]
+          };
           elevation: ${defaults.shadow.elevation};
         `
         : ``}

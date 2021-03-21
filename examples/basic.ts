@@ -57,7 +57,7 @@ export const {
       radius: 's-10',
     },
     shadow: {
-      shadowColor: '#000',
+      shadowColor: 'brand',
       shadowOffset: {
         width: 0,
         height: 5,
