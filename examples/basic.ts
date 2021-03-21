@@ -57,12 +57,12 @@ export const {
       radius: 's-10',
     },
     shadow: {
-      shadowColor: 'brand',
-      shadowOffset: {
+      color: 'brand',
+      offset: {
         width: 0,
         height: 5,
       },
-      shadowRadius: 6.27,
+      radius: 6.27,
       elevation: 10,
     },
   }

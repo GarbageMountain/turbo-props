@@ -69,12 +69,12 @@ type SizeProp<FontSize> = boolean | FontSize | number;
 type BorderType<Color> = [number, 'solid' | 'dotted' | 'dashed', Color];
 
 interface ShadowType<Color> {
-  shadowColor: Color;
-  shadowOffset: {
+  color: Color;
+  offset: {
     width: number;
     height: number;
   };
-  shadowRadius: number;
+  radius: number;
   elevation: number;
 }
 
@@ -181,19 +181,17 @@ export function TurboProps<T extends Theme>(
     ${({ shadow, theme }) =>
       typeof shadow === 'object'
         ? `
-          box-shadow: ${shadow.shadowOffset.height}px ${
-            shadow.shadowOffset.width
-          }px ${shadow.shadowRadius}px ${
-            theme.colors[shadow.shadowColor as string]
-          };
+          box-shadow: ${shadow.offset.height}px ${shadow.offset.width}px ${
+            shadow.radius
+          }px ${theme.colors[shadow.color as string]};
           elevation: ${shadow.elevation};
         `
         : typeof shadow === 'boolean'
         ? `
-          box-shadow: ${defaults.shadow.shadowOffset.height}px ${
-            defaults.shadow.shadowOffset.width
-          }px ${defaults.shadow.shadowRadius}px ${
-            theme.colors[defaults.shadow.shadowColor as string]
+          box-shadow: ${defaults.shadow.offset.height}px ${
+            defaults.shadow.offset.width
+          }px ${defaults.shadow.radius}px ${
+            theme.colors[defaults.shadow.color as string]
           };
           elevation: ${defaults.shadow.elevation};
         `
