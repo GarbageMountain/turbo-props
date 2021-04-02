@@ -58,6 +58,7 @@ type FlexAlignType =
   | 'center'
   | 'stretch'
   | 'baseline';
+type TextAlignType = 'auto' | 'left' | 'right' | 'center' | 'justify';
 
 /**
  * Is either present as boolean meaning default value,
@@ -104,6 +105,7 @@ export interface TypographyProps<T extends Theme> extends CommonProps<T> {
   family?: Fonts<T>;
   weight?: Weights<T>;
   color?: Colors<T>;
+  textAlign?: boolean | TextAlignType;
 }
 
 export interface SpacerProps<T extends Theme> extends DebugProps {
@@ -248,7 +250,12 @@ export function TurboProps<T extends Theme>(
           ((weight as unknown) as string) ??
             ((defaults.weight as unknown) as string)
         ]};
-    ${({ center }) => (center ? `text-align: center;` : ``)}
+    ${({ textAlign, center }) =>
+      typeof textAlign === 'string'
+        ? `text-align: ${textAlign};`
+        : textAlign || center
+        ? `text-align: center;`
+        : ``}
   `;
 
   const spacer = {
