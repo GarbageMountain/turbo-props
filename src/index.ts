@@ -101,7 +101,7 @@ export interface LayoutProps<T extends Theme> extends CommonProps<T> {
 }
 
 export interface TypographyProps<T extends Theme> extends CommonProps<T> {
-  size?: SizeProp<T>;
+  size?: SizeProp<Sizes<T>>;
   family?: Fonts<T>;
   weight?: Weights<T>;
   color?: Colors<T>;
