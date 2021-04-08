@@ -178,7 +178,8 @@ export function TurboProps<T extends Theme>(
                     ? radius
                     : (defaults.sizes.radius as string)
                 ] / 2
-          }px;`
+          }px;
+          overflow: hidden;`
         : ``}
     ${({ shadow, theme }) =>
       typeof shadow === 'object'
