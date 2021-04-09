@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import renderer from 'react-test-renderer';
 import 'jest-styled-components';
 import React from 'react';
-// import { baseRowLayout } from '../examples/basic';
+
+const globalColors = {
+  brand: 'red',
+  world: 'black',
+} as const;
 
 const initialTheme = {
   // be descriptive when describing your color names
-  colors: { brand: 'red' },
+  colors: globalColors,
   /*
    * sizes can be described in any way, we've found it useful to use
    * a hybrid of t-shirt sizing / numeric value to provid both context
@@ -45,8 +49,8 @@ const {
   // useTheme, // 👈 a useTheme hook with your theme baked in
   // // 👇 these are the basic building blocks
   baseLayout,
-  // baseRowLayout,
-  // baseColumnLayout,
+  baseRowLayout,
+  baseColumnLayout,
   // baseTypography,
   // spacer,
   // divider,
@@ -92,7 +96,9 @@ export type DebugProps = TP['DebugProps'];
 // https://www.typescriptlang.org/play?#code/PQKgUABBCMAsEFoIDECWAnAzgFwgewDMIBBddAQwE9JEE76aAjSkgO2wAs9WXkBXCAAoAAuXYE+ASggBiAKblMLGeTJUaNGVogBFPnJypuGqAEkAtgAcANnPNz2EchADmDuelQBjCAAM0WNgAPAAqAHy+EJzkuNjkANYGTqwkaiy+IZFiACYQ6HLYfOismBCo2ADkpQQYOBBytvbsVVGUlnIAdCYoeOj1AB7kVrbdvmPYmDTYbXJOZNAQALwQANoV5BUANBAVjFs7XhUAulMzc+gATEurAMzbF9vQJ1Cn7RAcCtkLywE4QaroaBhCDAYADdpebByXLYPAQRizdYVV6zD7kbJXH61YIAi7A0HguSQ6FROEIiA3GhjXzdYEANVQcgA7vgUgBxcoACT4jAAXO9sNhLJheaCJl4OB0AFaYDq9FzAOBgEDAMBq0AQAD62p1up1EAAmngihAAMJ4bKzTkeWZ6u3aiAqtXTN6-YIhAZQ1jZUpiSgrI7A5YeuT9L0+1ZHCAAfggrDkADcPBB+SEVgAGI4AbjVYA19rtEBCBlwpsUSQLesdqtQVl6uAA3hAAKIARz45Gs22b-QhuAAvhACOg8OYdsIXXIEBLO7ZWG5MMA+NhUNZMMiwJOIF5y6VlisaD2+0E2x3rEE3UEVncIA8YIHtjcwmFNofe0TgqfOxfsVfBNJFmBaALhvJtyH5HBPHnCB+wfIQAKAkDn1fKAjw-E922-S8AxfONEw8ZC32PL9z2wvhvTkGp42yODyMtKjoWfMATlzfNK31fh0E4ZMAGUoWFLV2IdJ1QBoYEeI4VRZkoY0+kwPBrGXIwSn5DhBWFUVgHFSUZTldAFTgYAxEwJkPDEiAGWZCB5MUlduBFAUhRFMVMAlaVZXlRVYGAGylPs8yAFlelmU1JOsOcF1U9TnK01ydI8-TlVVMAgA
 
 describe('Theme ', () => {
-  it('should match initial configuration with defaults passed to library', () => {});
+  it('should match initial configuration with defaults passed to library', () => {
+    expect(theme).toStrictEqual(initialTheme);
+  });
 });
 
 describe('Layout component', () => {
@@ -100,8 +106,79 @@ describe('Layout component', () => {
     ${baseLayout}
   `;
 
-  const tree = renderer.create(<Layout grow />).toJSON();
-  expect(tree).toHaveStyleRule('flex', '1');
-  expect(tree).toHaveStyleRule('display', 'flex');
-  // it('should create a row component', () => {});
+  it('should have minimal defaults', () => {
+    const tree = renderer.create(<Layout />).toJSON();
+    expect(tree).toHaveStyleRule('display', 'flex');
+    expect(tree).toHaveStyleRule('padding', '0px 0px');
+    expect(tree).toHaveStyleRule('flex', undefined);
+    expect(tree).toHaveStyleRule('background-color', undefined);
+    expect(tree).toHaveStyleRule('width', undefined);
+  });
+
+  it('should grow', () => {
+    const tree = renderer.create(<Layout grow />).toJSON();
+    expect(tree).toHaveStyleRule('flex', '1');
+  });
+
+  it('should align center', () => {
+    const tree = renderer.create(<Layout align />).toJSON();
+    expect(tree).toHaveStyleRule('align-items', 'center');
+  });
+
+  it('should justify center', () => {
+    const tree = renderer.create(<Layout justify />).toJSON();
+    expect(tree).toHaveStyleRule('justify-content', 'center');
+  });
+
+  it('should completely center', () => {
+    const tree = renderer.create(<Layout center />).toJSON();
+    expect(tree).toHaveStyleRule('justify-content', 'center');
+    expect(tree).toHaveStyleRule('align-items', 'center');
+  });
+
+  it('should use theme', () => {
+    const tree = renderer.create(<Layout bg="world" py px />).toJSON();
+    expect(tree).toHaveStyleRule('background-color', 'black');
+    expect(tree).toHaveStyleRule('padding', '18px 24px');
+  });
+});
+
+describe('Row Component', () => {
+  const Row = styled.div<LayoutProps>`
+    ${baseLayout}
+    ${baseRowLayout}
+  `;
+  it('should flex-direction row', () => {
+    const tree = renderer.create(<Row bg="world" py px />).toJSON();
+    expect(tree).toHaveStyleRule('flex-direction', 'row');
+    expect(tree).toHaveStyleRule('display', 'flex');
+  });
+
+  it('should flex-direction row', () => {
+    const tree = renderer.create(<Row reverse />).toJSON();
+    expect(tree).toHaveStyleRule('flex-direction', 'row-reverse');
+    expect(tree).toHaveStyleRule('display', 'flex');
+  });
+});
+
+describe('Column Component', () => {
+  const Column = styled.div<LayoutProps>`
+    ${baseLayout}
+    ${baseColumnLayout}
+  `;
+  it('should flex-direction row', () => {
+    const tree = renderer.create(<Column bg="world" py px />).toJSON();
+    expect(tree).toHaveStyleRule('flex-direction', 'column');
+    expect(tree).toHaveStyleRule('display', 'flex');
+  });
+
+  it('should take a size prop', () => {
+    const tree = renderer.create(<Column size={20} />).toJSON();
+    expect(tree).toHaveStyleRule('width', '20px');
+  });
+
+  it('can accept justify props', () => {
+    const tree = renderer.create(<Column justify="flex-start" />).toJSON();
+    expect(tree).toHaveStyleRule('justify-content', 'flex-start');
+  });
 });
