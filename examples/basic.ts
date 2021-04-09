@@ -45,7 +45,10 @@ export const {
     },
     grid: 8,
   },
-  // 👇 these are your theme defaults, the values that are used as fallbacks if no value is entered
+  // 👇 these are your defaults prop values,
+  //   if no prop value is explicitly set, turbo-props will
+  //  default here.
+  // example: <Button py /> == py === m-18
   {
     color: 'brand',
     font: 'mono',

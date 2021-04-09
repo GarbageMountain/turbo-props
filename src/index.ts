@@ -134,6 +134,7 @@ export function TurboProps<T extends Theme>(
   const useTheme = baseUseTheme as () => T;
 
   const base = css<CommonProps<T>>`
+  display: flex;
     ${({ bg, theme }) =>
       bg ? `background-color: ${theme.colors[bg as string]};` : ``}
     ${({ grow }) => (grow ? `flex: 1;` : ``)}
@@ -298,6 +299,7 @@ export function TurboProps<T extends Theme>(
       border-right-width: ${({ lineWidth }) => lineWidth ?? 1}px;
     `,
   };
+
   return {
     theme,
     css,
