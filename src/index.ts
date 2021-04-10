@@ -234,6 +234,8 @@ export function TurboProps<T extends Theme>(
     ${({ size }) => (size ? `width: ${size}px;` : ``)}
   `;
 
+  // We should set font values explicity rather than
+  // with shorthand which can become problematic.
   const baseTypography = css<TypographyProps<T>>`
     ${base}
     color: ${({ theme, color }) =>
