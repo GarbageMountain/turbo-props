@@ -46,12 +46,18 @@
       "limit": "10 KB"
     }
   ],
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "^4.1.1",
+    "**/@typescript-eslint/parser": "^4.1.1"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@types/react": "^17.0.3",
     "@types/styled-components": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
     "husky": "^5.1.1",
     "jest-styled-components": "^7.0.3",
     "react": "^17.0.2",
