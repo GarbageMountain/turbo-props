@@ -1,22 +1,73 @@
 # ─=≡Σ༼ つ ▀ \_▀ ༽つ`turbo-props`
 
-### Styled Components props for making snazzy building blocks using Typescript.
+### Your Theme + Styled Components + Typescript === Snazzy Building Blocks
+
+Turbo Props is a light weight wrapper around `styled-components` that:
+
+- auto-completes your props based off your theme.
+- provides an easy and flexible API to position and style your components.
+- provides type-safety based off your theme.
 
 ---
 
 ## Installation
 
-```bash
-yarn add turbo-props styled-components # or npm install turbo-props styled-components
+### yarn
 
-yarn add -D @types/styled-components # or npm install --save-dev @types/styled-components
+```bash
+yarn add turbo-props styled-components
+yarn add -D @types/styled-components
+```
+
+### npm
+
+```bash
+npm install turbo-props styled-components
+npm install --save-dev @types/styled-components
 ```
 
 ## Basic Usage
 
+`layout.tsx`
+
 ```typescript
-// in your Theme.ts file
-import { TurboProps, ThemedProps } from 'turbo-props';
+
+const {baseLayout, baseRowLayout, baseColumnLayout, spacer, base styled} from './yourConfig.ts'
+
+const Row = styled.div`
+  ${baseLayout}
+  ${baseRowLayout}
+`
+
+const Column = styled.div`
+  ${baseLayout}
+  ${baseColumnLayout}
+`
+
+const SpacerHorizontal = styled.div`
+  ${spacer}
+`
+
+const Text = styled.p`
+  ${baseTypography}
+`
+  <Column px>
+    <Spacer size="l-24" />
+    <Row size="m-18" reverse>
+      <Text weight="light">Turbo Props ─=≡Σ༼ つ ▀ \_▀ ༽つ</Text>
+    </Row>
+  </Column>
+
+
+
+```
+
+## Basic Configuration
+
+`yourConfig.ts`
+
+```typescript
+import { TurboProps, ThemedProps, baseTypography } from 'turbo-props';
 
 export const {
   /*
@@ -64,6 +115,7 @@ export const {
     grid: 8,
   },
   // these are your theme defaults, the values that are used as fallbacks if no value is entered
+  // example: <Row px="l-24" /> v. <Row px />
   {
     color: 'brand',
     font: 'mono',
@@ -94,81 +146,7 @@ export type Weight = TP['Weights'];
 export type DebugProps = TP['DebugProps'];
 ```
 
-# Dev
+### Contributing
 
-This package uses `tsdx`, so some of the instructions for development are left below.
-
-## Commands
-
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
-
-```bash
-yarn start # or npm start
-```
-
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
-```
-
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+- Please create an issue with reproducible steps or feature requests.
+- Build steps and configuration [here](https://github.com/GarbageMountain/turbo-props/wiki/Contributing)
