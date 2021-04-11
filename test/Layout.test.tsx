@@ -84,7 +84,7 @@ describe('Layout Base Component', () => {
   it('should be a row', () => {
     const { getByTestId } = renderWithTheme({
       theme,
-      children: <Row reverse data-testid="row" size={30} />,
+      children: <Row px="l-24" reverse align="center" />,
     });
 
     const component = getByTestId(/row/i);

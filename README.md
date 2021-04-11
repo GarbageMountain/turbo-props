@@ -2,6 +2,8 @@
 
 ### Your Theme + Styled Components + Typescript === Snazzy Building Blocks
 
+<image src="https://user-images.githubusercontent.com/2502947/114310769-ee259600-9ab9-11eb-8fff-d878a3327b24.gif" height="400px" >
+
 Turbo Props is a light weight wrapper around `styled-components` that:
 
 - auto-completes your props based off your theme.
@@ -32,14 +34,14 @@ npm install --save-dev @types/styled-components
 
 ```typescript
 
-const {baseLayout, baseRowLayout, baseColumnLayout, spacer, base styled} from './yourConfig.ts'
+const {baseLayout, baseRowLayout, LayoutProps, baseColumnLayout, spacer, base styled} from './yourConfig.ts'
 
-const Row = styled.div`
+const Row = styled.div<LayoutProps>`
   ${baseLayout}
   ${baseRowLayout}
 `
 
-const Column = styled.div`
+const Column = styled.div<LayoutProps>`
   ${baseLayout}
   ${baseColumnLayout}
 `
@@ -57,9 +59,6 @@ const Text = styled.p`
       <Text weight="light">Turbo Props ─=≡Σ༼ つ ▀ \_▀ ༽つ</Text>
     </Row>
   </Column>
-
-
-
 ```
 
 ## Basic Configuration
