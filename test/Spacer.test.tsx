@@ -44,19 +44,6 @@ describe('Spacer Component', () => {
     });
   });
 
-  it('should debug horizontal spacer', () => {
-    const { getByTestId } = renderWithTheme({
-      theme,
-      children: <SpacerHorizontal data-testid="spacer-horizontal" debug />,
-    });
-
-    const component = getByTestId(/spacer-horizontal/i);
-
-    expect(component).toHaveStyle({
-      border: '1px solid red',
-    });
-  });
-
   it('should have sensible vertical defaults', () => {
     const { getByTestId } = renderWithTheme({
       theme,

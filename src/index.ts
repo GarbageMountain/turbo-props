@@ -18,10 +18,8 @@ interface Theme {
     };
   };
   grid: number;
-  debugBorders: boolean;
 }
 
-export type DebugBorders<T extends Theme> = keyof T['debugBorders'];
 export type Colors<T extends Theme> = keyof T['colors'];
 export type Sizes<T extends Theme> = keyof T['sizes'];
 export type Fonts<T extends Theme> = keyof T['fonts'];
@@ -230,15 +228,11 @@ export function TurboProps<T extends Theme>(
   const baseRowLayout = css<LayoutProps<T>>`
     flex-direction: ${({ reverse }) => (reverse ? `row-reverse` : `row`)};
     ${({ size }) => (size ? `height: ${size}px;` : ``)}
-    ${({ debug, theme: { debugBorders } }) =>
-      (debug || debugBorders) && `border: solid 1px green;`}
   `;
 
   const baseColumnLayout = css<LayoutProps<T>>`
     flex-direction: ${({ reverse }) => (reverse ? `column-reverse` : `column`)};
     ${({ size }) => (size ? `width: ${size}px;` : ``)}
-    ${({ debug, theme: { debugBorders } }) =>
-      (debug || debugBorders) && `border: solid 1px pink;`}
   `;
 
   // We should set font values explicity rather than
@@ -276,27 +270,19 @@ export function TurboProps<T extends Theme>(
             ? size
             : theme.sizes[size as string]
           : theme.grid * units}px;
-      ${({ debug, theme: { debugBorders } }) =>
-        (debug || debugBorders) && `border: solid 1px red;`}
     `,
     vertical: css<SpacerProps<T>>`
-    ${({ debug, theme: { debugBorders } }) =>
-      (debug || debugBorders) && `border: solid 1px purple;`}
       height: ${({ theme, units = 1, size }) =>
         size !== undefined
           ? typeof size === 'number'
             ? size
             : theme.sizes[size as string]
           : theme.grid * units}px;
-      ${({ debug, theme: { debugBorders } }) =>
-        (debug || debugBorders) && `border: solid 1px red;`}
     `,
     flex: css<{ grow?: number; shrink?: number } & DebugProps>`
       ${({ grow, shrink }) => (!grow && !shrink ? `flex: 1;` : ``)}
       ${({ grow }) => (grow ? `flex-grow: ${grow};` : ``)}
       ${({ shrink }) => (shrink ? `flex-shrink: ${shrink};` : ``)}
-      ${({ debug, theme: { debugBorders } }) =>
-        (debug || debugBorders) && `border: solid 1px green;`}
     `,
   };
 

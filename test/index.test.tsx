@@ -2,7 +2,6 @@ import { TurboProps, ThemedProps } from '../src';
 import '@testing-library/jest-dom';
 
 const mainAppTheme = {
-  debugBorders: false,
   // be descriptive when describing your color names
   colors: { brand: 'red' },
   /*
@@ -88,7 +87,6 @@ export type Color = TP['Colors'];
 export type Size = TP['Sizes'];
 export type Font = TP['Fonts'];
 export type Weight = TP['Weights'];
-export type DebugProps = TP['DebugProps'];
 
 describe('css function', () => {
   it('should exist', () => {

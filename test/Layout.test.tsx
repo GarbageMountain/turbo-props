@@ -98,18 +98,6 @@ describe('Layout Base Component', () => {
     });
   });
 
-  it('should debug borders on Row', () => {
-    const { getByTestId } = renderWithTheme({
-      theme,
-      children: <Row debug data-testid="row" size={30} />,
-    });
-
-    const component = getByTestId(/row/i);
-    expect(component).toHaveStyle({
-      border: '1px solid green',
-    });
-  });
-
   it('should be a column', () => {
     const { getByTestId } = renderWithTheme({
       theme,
@@ -122,19 +110,6 @@ describe('Layout Base Component', () => {
       flexDirection: 'column-reverse',
       display: 'flex',
       width: '30px',
-    });
-  });
-
-  it('should debug borders on Column', () => {
-    const { getByTestId } = renderWithTheme({
-      theme,
-      children: <Column data-testid="column" debug />,
-    });
-
-    const component = getByTestId(/column/i);
-
-    expect(component).toHaveStyle({
-      border: '1px solid pink',
     });
   });
 });
