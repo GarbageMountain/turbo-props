@@ -134,6 +134,7 @@ export function TurboProps<T extends Theme>(
   const useTheme = baseUseTheme as () => T;
 
   const base = css<CommonProps<T>>`
+    display: flex;
     ${({ bg, theme }) =>
       bg ? `background-color: ${theme.colors[bg as string]};` : ``}
     ${({ grow }) => (grow ? `flex: 1;` : ``)}
@@ -221,6 +222,7 @@ export function TurboProps<T extends Theme>(
         : justify || center
         ? `justify-content: center;`
         : ``}
+  
   `;
 
   const baseRowLayout = css<LayoutProps<T>>`
@@ -233,6 +235,8 @@ export function TurboProps<T extends Theme>(
     ${({ size }) => (size ? `width: ${size}px;` : ``)}
   `;
 
+  // We should set font values explicity rather than
+  // with shorthand which can become problematic.
   const baseTypography = css<TypographyProps<T>>`
     ${base}
     color: ${({ theme, color }) =>
