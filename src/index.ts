@@ -126,7 +126,7 @@ export interface DividerProps<T extends Theme> {
 }
 
 export function TurboProps<T extends Theme>(
-  theme: T,
+  userTheme: T,
   defaults: ThemeDefaults<T>
 ) {
   const css = baseCSS as ThemedCssFunction<T>;
@@ -222,7 +222,6 @@ export function TurboProps<T extends Theme>(
         : justify || center
         ? `justify-content: center;`
         : ``}
-  
   `;
 
   const baseRowLayout = css<LayoutProps<T>>`
@@ -303,7 +302,7 @@ export function TurboProps<T extends Theme>(
     `,
   };
   return {
-    theme,
+    theme: userTheme,
     css,
     styled,
     useTheme,
