@@ -43,6 +43,11 @@ export interface DebugProps {
    * show debug borders for just this component
    */
   debug?: boolean;
+
+  /**
+   * show debug borders for all turbo-props components
+   */
+  debugBorders?: boolean;
 }
 
 type FlexJustifyType =
@@ -261,6 +266,13 @@ export function TurboProps<T extends Theme>(
         : ``}
   `;
 
+  const debugBorders = (color: string, width?: number) => () => css<
+    TypographyProps<T>
+  >`
+    ${({ debug, debugBorders }) =>
+      (debugBorders || debug) && `border: solid ${width ?? 1}px ${color};`}
+  `;
+
   const spacer = {
     horizontal: css<SpacerProps<T>>`
       width: ${({ theme, units = 1, size }) =>
@@ -312,6 +324,7 @@ export function TurboProps<T extends Theme>(
     baseTypography,
     spacer,
     divider,
+    debugBorders,
   };
 }
 
