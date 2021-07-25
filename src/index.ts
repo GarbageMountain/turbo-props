@@ -43,10 +43,6 @@ export interface DebugProps {
    * show debug borders for just this component
    */
   debug?: boolean;
-
-  /**
-   * show debug borders for all turbo-props components
-   */
   debugBorders?: boolean;
 }
 
@@ -123,6 +119,11 @@ export interface SpacerProps<T extends Theme> extends DebugProps {
    * If `size` is provided, `units` is ignored
    */
   size?: SizeProp<Sizes<T>>;
+}
+
+export interface FlexProps extends DebugProps {
+  grow?: number;
+  shrink?: number;
 }
 
 export interface DividerProps<T extends Theme> {
@@ -266,10 +267,10 @@ export function TurboProps<T extends Theme>(
         : ``}
   `;
 
-  const debugBorders = (color: string, width?: number) => () => css<
+  const debugComponentBorders = (width?: number) => (color: string) => css<
     TypographyProps<T>
   >`
-    ${({ debug, debugBorders }) =>
+    ${({ debugBorders, debug }) =>
       (debugBorders || debug) && `border: solid ${width ?? 1}px ${color};`}
   `;
 
@@ -290,7 +291,7 @@ export function TurboProps<T extends Theme>(
             : theme.sizes[size as string]
           : theme.grid * units}px;
     `,
-    flex: css<{ grow?: number; shrink?: number } & DebugProps>`
+    flex: css<FlexProps>`
       ${({ grow, shrink }) => (!grow && !shrink ? `flex: 1;` : ``)}
       ${({ grow }) => (grow ? `flex-grow: ${grow};` : ``)}
       ${({ shrink }) => (shrink ? `flex-shrink: ${shrink};` : ``)}
@@ -320,11 +321,11 @@ export function TurboProps<T extends Theme>(
     useTheme,
     baseLayout,
     baseRowLayout,
+    debugComponentBorders,
     baseColumnLayout,
     baseTypography,
     spacer,
     divider,
-    debugBorders,
   };
 }
 
