@@ -267,11 +267,9 @@ export function TurboProps<T extends Theme>(
         : ``}
   `;
 
-  const debugComponentBorders = (width?: number) => (color: string) => css<
-    TypographyProps<T>
-  >`
+  const debug = (width = 0.5) => (color: string) => css<DebugProps>`
     ${({ debugBorders, debug }) =>
-      (debugBorders || debug) && `border: solid ${width ?? 1}px ${color};`}
+      (debugBorders || debug) && `border: solid ${width}px ${color};`}
   `;
 
   const spacer = {
@@ -321,11 +319,11 @@ export function TurboProps<T extends Theme>(
     useTheme,
     baseLayout,
     baseRowLayout,
-    debugComponentBorders,
     baseColumnLayout,
     baseTypography,
     spacer,
     divider,
+    debug,
   };
 }
 
