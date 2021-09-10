@@ -1,14 +1,38 @@
 # ─=≡Σ༼ つ ▀ \_▀ ༽つ`turbo-props`
 
-## A Small wrapper around `styled-components` to turbo charage your workflow.
+## A Post-it® sized wrapper around `styled-components` to turbo charage your workflow.
 
-- Automatically bake in your theme and design tokens into Typescript. Autocomplete your props based off your theme.
+- Automatically bake in your theme and design tokens into Typescript. Autocomplete your props based off your theme. Export your theme `Types` where ever you need them.
 - Sensiable defaults.
+- First class visual debugging
 - An API that can fit on a Post-It note.
 - Small set of primative components to build on top of.
 - The full power and flexability of `styled-components` under the hood.
+- Strong opinions around margin. We agree with creator of styled-components [margin is harmful](https://mxstbr.com/thoughts/margin/) and didn't include it in the API.
 
 <image src="https://user-images.githubusercontent.com/2502947/114310769-ee259600-9ab9-11eb-8fff-d878a3327b24.gif" height="400px" >
+
+---
+
+## Installation
+
+### yarn
+
+```bash
+yarn add turbo-props styled-components
+yarn add -D @types/styled-components
+```
+
+### npm
+
+```bash
+npm install turbo-props styled-components
+npm install --save-dev @types/styled-components
+```
+
+---
+
+## The API
 
 ```tsx
 <Layout.Column
@@ -29,21 +53,78 @@
 
 ---
 
-## Installation
+## Primative Components
 
-### yarn
-
-```bash
-yarn add turbo-props styled-components
-yarn add -D @types/styled-components
+```tsx
+<Layout.Column></Layout.Column>
+<Layout.Row></Layout.Row>
+<Spacer.Flex />
+<Spacer.Horizontal />
+<Spacer.Vertical />
+<Divider.Horizontal />
+<Divider.Vertical />
+<Text>Hello</Text>
 ```
 
-### npm
+---
 
-```bash
-npm install turbo-props styled-components
-npm install --save-dev @types/styled-components
+## Composable API
+
+Just like with `styled-components`, composing your own abstractions on top of `turbo-props` is easy.
+
+example: A `Circle` component
+
+```tsx
+import { styled, css } from '../theme';
+import { Layout } from './Layout.component';
+
+export type CircleProps = { circleSize: number };
+
+export const baseCircleStyle = css<CircleProps>`
+  border-radius: ${({ circleSize }) => circleSize / 2}px;
+  width: ${({ circleSize }) => circleSize}px;
+  height: ${({ circleSize }) => circleSize}px;
+  overflow: hidden;
+`;
+
+export const Circle = styled(Layout.Column)<CircleProps>`
+  ${baseCircleStyle}
+`;
 ```
+
+## First Class Debugging
+
+We got sick of writing `border: 1px solid red` so we wrote it into our components.
+
+```tsx
+ Row: styled(View)`
+    ${baseLayout}
+    ${baseRowLayout}
+    ${({ debug, theme: { debugBorders } }) =>
+      (debugBorders || debug) &&
+      `border: solid ${StyleSheet.hairlineWidth}px red;`}
+  `,
+```
+
+Or you can import our `debug` function.
+
+```tsx
+ Row: styled(View)`
+    ${baseLayout}
+    ${baseRowLayout}
+    ${debug('red')}
+  `,
+```
+
+With a global state libary, you can toggle visual debugging with one click. Refer to our [example project]('https://github.com/GarbageMountain/turbo-talk-native-example-rainbow-wallet) for a `zustand` implementation.
+
+<img src="https://user-images.githubusercontent.com/2502947/132853348-a04ed6c9-6ab7-47f3-84f5-12c16b726e72.gif" height=400 >
+
+## Starter Template
+
+If you want to skip the set up for and hop right in `react-native` projects we have a starter template [here](https://github.com/GarbageMountain/turbo-starter)
+
+---
 
 ## Basic Usage
 
