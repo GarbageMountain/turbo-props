@@ -1,14 +1,31 @@
 # ─=≡Σ༼ つ ▀ \_▀ ༽つ`turbo-props`
 
-### Your Theme + Styled Components + Typescript === Snazzy Building Blocks
+## A Small wrapper around `styled-components` to turbo charage your workflow.
+
+- Automatically bake in your theme and design tokens into Typescript. Autocomplete your props based off your theme.
+- Sensiable defaults.
+- An API that can fit on a Post-It note.
+- Small set of primative components to build on top of.
+- The full power and flexability of `styled-components` under the hood.
 
 <image src="https://user-images.githubusercontent.com/2502947/114310769-ee259600-9ab9-11eb-8fff-d878a3327b24.gif" height="400px" >
 
-Turbo Props is a light weight wrapper around `styled-components` that:
-
-- auto-completes your props based off your theme.
-- provides an easy and flexible API to position and style your components.
-- provides type-safety based off your theme.
+```tsx
+<Layout.Column
+  debug
+  grow
+  radius="s-10"
+  border={[1, 'solid', 'grey']}
+  shadow
+  justify
+>
+  <Layout.Row px py absolute bg="white" align>
+    <Text weight="light" size="s-10">
+      Hello Turbo ─=≡Σ༼ つ ▀ \_▀ ༽つ
+    </Text>
+  </Layout.Row>
+</Layout.Column>
+```
 
 ---
 
