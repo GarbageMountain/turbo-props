@@ -267,7 +267,7 @@ export function TurboProps<T extends Theme>(
         : ``}
   `;
 
-  const debug = (width = 0.5) => (color: string) => css<DebugProps>`
+  const debug = (color: string, width = 0.5) => css<DebugProps>`
     ${({ debugBorders, debug }) =>
       (debugBorders || debug) && `border: solid ${width}px ${color};`}
   `;
