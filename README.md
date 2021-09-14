@@ -1,6 +1,6 @@
 # ─=≡Σ༼ つ ▀ \_▀ ༽つ`turbo-props`
 
-## A Post-it® sized wrapper around `styled-components` to turbo charage your workflow.
+## A Post-it® sized wrapper around `styled-components` to turbo charge your workflow.
 
 - Automatically bake in your theme and design tokens into Typescript. Autocomplete your props based off your theme. Export your theme `Types` where ever you need them.
 - Sensiable defaults.
