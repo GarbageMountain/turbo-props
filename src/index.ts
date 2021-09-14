@@ -12,6 +12,9 @@ interface Theme {
   sizes: {
     [key: string]: number;
   };
+  /**
+   * show debug borders for all components
+   */
   debugBorders: boolean;
   fonts: {
     [key: string]: {
@@ -44,7 +47,6 @@ export interface DebugProps {
    * show debug borders for just this component
    */
   debug?: boolean;
-  debugBorders?: boolean;
 }
 
 type FlexJustifyType =
