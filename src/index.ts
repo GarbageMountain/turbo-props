@@ -12,6 +12,7 @@ interface Theme {
   sizes: {
     [key: string]: number;
   };
+  debugBorders: boolean;
   fonts: {
     [key: string]: {
       [key: string]: string;
@@ -268,8 +269,8 @@ export function TurboProps<T extends Theme>(
   `;
 
   const debug = (color: string, width = 0.5) => css<DebugProps>`
-    ${({ debugBorders, debug }) =>
-      (debugBorders || debug) && `border: solid ${width}px ${color};`}
+    ${({ debug, theme }) =>
+      (theme.debugBorders || debug) && `border: solid ${width}px ${color};`}
   `;
 
   const spacer = {
