@@ -27,6 +27,7 @@ const mainAppTheme = {
     },
   },
   grid: 8,
+  debugBorders: false,
 };
 
 export const {
