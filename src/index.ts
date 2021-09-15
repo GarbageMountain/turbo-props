@@ -12,6 +12,10 @@ interface Theme {
   sizes: {
     [key: string]: number;
   };
+  /**
+   * show debug borders for all components
+   */
+  debugBorders?: boolean;
   fonts: {
     [key: string]: {
       [key: string]: string;
@@ -43,7 +47,6 @@ export interface DebugProps {
    * show debug borders for just this component
    */
   debug?: boolean;
-  debugBorders?: boolean;
 }
 
 type FlexJustifyType =
@@ -267,9 +270,9 @@ export function TurboProps<T extends Theme>(
         : ``}
   `;
 
-  const debug = (width = 0.5) => (color: string) => css<DebugProps>`
-    ${({ debugBorders, debug }) =>
-      (debugBorders || debug) && `border: solid ${width}px ${color};`}
+  const debug = (color: string, width = 0.5) => css<DebugProps>`
+    ${({ debug, theme }) =>
+      (theme.debugBorders || debug) && `border: solid ${width}px ${color};`}
   `;
 
   const spacer = {
