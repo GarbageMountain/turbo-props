@@ -92,11 +92,13 @@ export type Weight = TP['Weights'];
 describe('css function', () => {
   it('should exist', () => {
     expect(css).toBeTruthy();
+    expect(css).toBeInstanceOf(Function);
   });
 });
 
 describe('useTheme function', () => {
   it('should exist', () => {
     expect(useTheme).toBeTruthy();
+    expect(useTheme).toBeInstanceOf(Function);
   });
 });

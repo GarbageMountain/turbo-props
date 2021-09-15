@@ -15,7 +15,7 @@ interface Theme {
   /**
    * show debug borders for all components
    */
-  debugBorders: boolean;
+  debugBorders?: boolean;
   fonts: {
     [key: string]: {
       [key: string]: string;
