@@ -112,4 +112,30 @@ describe('Layout Base Component', () => {
       width: '30px',
     });
   });
+
+  it('should have responsive padding', () => {
+    const { getByTestId } = renderWithTheme({
+      theme,
+      children: (
+        <Column
+          data-testid="column"
+          reverse
+          px={{
+            s: 10,
+            m: 20,
+            l: 30,
+          }}
+          size={30}
+        />
+      ),
+    });
+
+    const component = getByTestId(/column/i);
+
+    expect(component).toHaveStyle({
+      flexDirection: 'column-reverse',
+      display: 'flex',
+      width: '30px',
+    });
+  });
 });
